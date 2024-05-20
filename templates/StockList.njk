@@ -27,17 +27,6 @@
         {% else %}
           {% set colorClassPerformance = "" %}
         {% endif %}
-          <span class="jast-performance {{ colorClassPerformance }}">
-          {% if colorClassPerformance and (config.showStockPerformanceValue or config.showStockPerformancePercent) %}
-            <span class="jast-change">
-              (
-                {% if config.showStockPerformanceValue %}<span class="jast-change-value">{% if colorClassPerformance == "high" %}+{%endif%}{{ utils.getStockPerformanceAsString(stock, config) }}</span>{% endif %}
-                {% if config.showStockPerformanceValueSum %}<span class="jast-change-value">{% if colorClassPerformance == "high" %}+{%endif%}{{ utils.getStockPerformanceSumAsString(stock, config) }}</span>{% endif %}
-                {% if config.showStockPerformancePercent %}<span class="jast-change-value">{% if colorClassPerformance == "high" %}+{%endif%}{{ utils.getStockPerformancePercentAsString(stock, config) }}</span>{% endif %}
-              )
-            </span>
-          {% endif %}
-          </span>
       </li>
     {% endif %}
   {% endfor %}
