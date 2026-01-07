@@ -1,4 +1,4 @@
-export type Config = {
+export interface Config {
   currencyStyle: 'symbol' | 'code' | 'name'
   fadeSpeedInSeconds: number
   lastUpdateFormat: string
@@ -7,7 +7,7 @@ export type Config = {
   maxWidth: string
   numberDecimalsPercentages: number
   numberDecimalsValues: number
-  displayMode: 'vertical' | 'horizontal' | 'none' | 'table'
+  displayMode: 'vertical' | 'horizontal' | 'none' | 'table' | 'default-table'
   scroll?: 'vertical' | 'horizontal' | 'none' | 'table'
   showCurrency: boolean
   showColors: boolean
@@ -31,7 +31,7 @@ export type Config = {
   virtualHorizontalMultiplier: number
 }
 
-export type Stock = {
+export interface Stock {
   symbol: string
   name?: string
   quantity?: number

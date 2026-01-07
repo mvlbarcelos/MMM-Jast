@@ -1,11 +1,20 @@
 import * as Log from 'logger'
-import yahooFinance from 'yahoo-finance2'
-import { QuoteSummaryResult } from 'yahoo-finance2/dist/esm/src/modules/quoteSummary-iface'
+import * as yahooFinance2Module from 'yahoo-finance2'
+import type { QuoteSummaryResult } from 'yahoo-finance2/esm/src/modules/quoteSummary'
 import { Config } from '../types/Config'
 import { StockResponse } from '../types/StockResponse'
 
-export default class JastBackendUtils {
-  static async requestStocks(config: Config): Promise<StockResponse[]> {
+// Handle both ESM and CommonJS module formats
+// TypeScript sees the namespace import, but at runtime Rollup will provide the correct format
+const YahooFinance = ('default' in yahooFinance2Module
+  ? yahooFinance2Module.default
+  : yahooFinance2Module) as unknown as new (options: { suppressNotices: string[] }) => {
+  quoteSummary: (symbol: string, options: { modules: string[] }) => Promise<QuoteSummaryResult>
+}
+
+const JastBackendUtils = {
+  async requestStocks(config: Config): Promise<StockResponse[]> {
+    const yahooFinance = new YahooFinance({ suppressNotices: ['yahooSurvey'] })
     const stocks = []
     const promises: Promise<QuoteSummaryResult>[] = []
 
@@ -58,3 +67,5 @@ export default class JastBackendUtils {
     return stocks
   }
 }
+
+export default JastBackendUtils

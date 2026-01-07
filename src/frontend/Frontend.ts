@@ -1,9 +1,9 @@
 import Utils from './JastFrontendUtils'
 import { Config } from '../types/Config'
+import * as Log from 'logger'
 
 // Global or injected variable declarations
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-declare const moment: any
+declare const moment: typeof import('moment')
 
 Module.register<Config>('MMM-Jast', {
   defaults: {
@@ -73,7 +73,7 @@ Module.register<Config>('MMM-Jast', {
 
   start() {
     if (this.config.scroll) {
-      console.warn("MMM-JAST config property 'scroll' is deprecated. Please use displayMode instead.")
+      Log.warn("MMM-JAST config property 'scroll' is deprecated. Please use displayMode instead.")
       this.config.displayMode = this.config.scroll
     }
     this.loadData()
@@ -97,7 +97,7 @@ Module.register<Config>('MMM-Jast', {
     if (notificationIdentifier === `JAST_STOCKS_RESPONSE-${this.identifier}`) {
       this.state = payload
       this.updateDom()
-      console.log('data', payload)
+      Log.debug('Stock data received:', payload)
     }
   }
 })

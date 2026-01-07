@@ -2,19 +2,29 @@
 
 [![version](https://img.shields.io/github/package-json/v/jalibu/MMM-Jast)](https://github.com/jalibu/MMM-Jast/releases) [![Known Vulnerabilities](https://snyk.io/test/github/jalibu/MMM-Jast/badge.svg?targetFile=package.json)](https://snyk.io/test/github/jalibu/MMM-Jast?targetFile=package.json)
 
-This is a minimalistic stock ticker based on Yahoo's finance API for the [MagicMirror²](https://magicmirror.builders/) platform.  
+This is a minimalistic stock ticker based on Yahoo's finance API for the [MagicMirror²](https://magicmirror.builders/) platform.
 Click here for MagicMirror² [Forum Thread](https://forum.magicmirror.builders/topic/12507/mmm-jast-just-another-stock-ticker).
 
 Contribution welcome.
 
-#### Notice
-Please note that there have been recent changes that may affect the function of this module and require your action. Please read the linked articles if you are facing one of these problems.
-1. [Choppy ticker animation since MM 2.26](https://github.com/jalibu/MMM-Jast/issues/64)
-2. [Stocks do not load - Getting error "Invalid Crumb"](https://github.com/jalibu/MMM-Jast/releases/tag/v2.9.4)
+#### Performance on Raspberry Pi
+
+For optimal performance on Raspberry Pi devices (especially Pi Zero, Zero 2W, and older Pi models), consider the following configuration adjustments:
+
+**For best performance:**
+
+- Use `displayMode: "none"` (static display) for lowest resource usage
+- This completely eliminates animation overhead
+
+**If you want scrolling:**
+
+- Increase `fadeSpeedInSeconds` to 5-7 seconds for smoother animations
+- Lower values require more frequent frame updates, which can cause stuttering on low-powered devices
+- The vertical scroll mode is now optimized for continuous one-directional scrolling
 
 ## Support
 
-I put a lot of time and effort into the creation and maintenance for this module and I'm glad so many people like it.  
+I put a lot of time and effort into the creation and maintenance for this module and I'm glad so many people like it.
 If you also like this module and want to thank, please rate this repository with a star or [donate a small amount that is worth it to you](https://paypal.me/jalibu).
 
 ## Features
@@ -51,22 +61,29 @@ If you also like this module and want to thank, please rate this repository with
 
 <img src="docs/table.png" height="90px">
 
-## Installing the Module
+## Installation
 
-1. Navigate to the `MagicMirror/modules` directory and execute the following command
+Navigate to the `MagicMirror/modules` directory, clone this repository, and install the dependencies:
 
-   ```sh
-   git clone https://github.com/jalibu/MMM-Jast
-   ```
+```sh
+cd ~/MagicMirror/modules
+git clone https://github.com/jalibu/MMM-Jast
+npm ci
+```
 
-2. Change into the MMM-Jast module folder and install runtime dependencies with
+## Update
 
-   ```sh
-   cd MMM-Jast
-   npm install
-   ```
+To update the module to the latest version, navigate to the `MMM-Jast` directory and pull the latest changes from GitHub. After that, reinstall the dependencies:
 
-3. Add the module configuration into the `MagicMirror/config/config.js` file (sample configuration):
+```sh
+cd ~/MagicMirror/modules/MMM-Jast
+git pull
+npm ci
+```
+
+## Configuration
+
+Add the module configuration into the `MagicMirror/config/config.js` file (sample configuration):
 
 ```javascript
 {
@@ -80,7 +97,7 @@ If you also like this module and want to thank, please rate this repository with
     maxWidth: "100%",
     numberDecimalsPercentages: 1,
     numberDecimalsValues: 2,
-    displayMode: "vertical", // One of ["none", "vertical", "horizontal", "table"]
+    displayMode: "vertical", // One of ["none", "vertical", "horizontal", "table", "default-table"]
     showColors: true,
     showCurrency: true,
     showChangePercent: true,
@@ -115,7 +132,7 @@ If you also like this module and want to thank, please rate this repository with
 | Option                            | Description                                                                                                                                                                                  |
 | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `currencyStyle`                   | Style of currency. <br><br>**Type:** `String` <br>**Allowed values:** `"code"` (EUR), `"symbol"` (€) or `"name"` (Euro)<br> **Default value:** `code`                                        |
-| `displayMode`                     | Display mode for ticker. <br><br>**Type:** `String`<br>**Allowed Values:** `"none"`, `"vertical"`, `"horizontal"` or `"table"` <br>**Default value:** `"vertical"`                           |
+| `displayMode`                     | Display mode for ticker. <br><br>**Type:** `String`<br>**Allowed Values:** `"none"`, `"vertical"`, `"horizontal"`, `"table"` or `"default-table"` <br>**Default value:** `"vertical"`        |
 | `fadeSpeedInSeconds`              | Animation speed for ticker. <br><br>**Type:** `Number`<br> **Default value:** `3.5`                                                                                                          |
 | `lastUpdateFormat`                | Define dateformat, if the last update should be displayed. <br><br>**Type:** `String`<br> **Default value:** `"HH:mm"`                                                                       |
 | `locale`                          | Option to override the global/system locale for value formatting. <br><br>**Type:** `String`<br> **Default value:** `undefined` (system locale)                                              |
@@ -160,8 +177,16 @@ The easiest way to get the symbol for your stock is to open [finance.yahoo.com](
 
 ## Contribution and Development
 
-This module is written in TypeScript and compiled with Rollup.  
-The source files are located in the `/src` folder.
-Compile target files with `npm run build`.
+This module is written in TypeScript and compiled with Rollup.
+The source files are located in the `/src` directory.
+Compile target files with `node --run build`.
 
 Contribution for this module is welcome!
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
+
+## Changelog
+
+All notable changes to this project will be documented in the [CHANGELOG.md](CHANGELOG.md) file.
